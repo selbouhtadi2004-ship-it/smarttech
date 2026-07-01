@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Mon Profil | InnovaTech{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb bg-white p-3 rounded shadow-sm">
+            <li class="breadcrumb-item"><a href="{% url 'catalogue:accueil' %}" class="text-decoration-none"><i class="bi bi-house-door-fill"></i> Accueil</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Mon Espace Client</li>
+        </ol>
+    </nav>
+
+    <div class="row g-4">
+        <!-- Left Column: User Card & Avatar Upload -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+                <div class="bg-primary py-4 text-center text-white position-relative">
+                    <h5 class="fw-bold mb-0" style="font-family: 'Outfit', sans-serif;">Mon Profil</h5>
+                    <span class="text-white-50 small">{{ user.email }}</span>
+                </div>
+                <div class="card-body p-4 text-center bg-white">
+                    <form method="POST" action="{% url 'comptes:profil' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <!-- Avatar Preview Wrapper -->
+                        <div class="position-relative d-inline-block mb-3">
+                            <div class="avatar-wrapper rounded-circle border border-primary border-3 overflow-hidden shadow-sm" style="width: 140px; height: 140px; margin: 0 auto;">
+                                {% if user.profil.avatar %}
+                                    <img src="{{ user.profil.avatar.url }}" id="avatar-preview" class="w-100 h-100 object-fit-cover" alt="Avatar">
+                                {% else %}
+                                    <img src="https://api.dicebear.com/7.x/adventurer/svg?seed={{ user.username }}" id="avatar-preview" class="w-100 h-100 object-fit-cover bg-light" alt="Default Avatar">
+                                {% endif %}
+                            </div>
+                            <!-- Small overlay camera button -->
+                            <label for="avatar-input" class="btn btn-warning btn-sm position-absolute bottom-0 end-0 rounded-circle shadow d-flex align-items-center justify-content-center" style="width: 35px; height: 35px; cursor: pointer;">
+                                <i class="bi bi-camera-fill text-dark"></i>
+                            </label>
+                        </div>
+
+                        <h5 class="fw-bold mb-1">{{ user.first_name }} {{ user.last_name }}</h5>
+                        <p class="text-muted small mb-4">Membre depuis le : {{ user.date_joined|date:"d M Y" }}</p>
+
+                        <!-- Non-visible file input triggered by camera icon -->
+                        <div style="display: none;">
+                            {{ form.avatar }}
+                        </div>
+
+                        <div class="text-start p-3 bg-light rounded-3 mb-3">
+                            <h6 class="fw-bold mb-2 text-primary"><i class="bi bi-info-circle-fill me-2"></i>Note</h6>
+                            <p class="text-muted small mb-0">Vous pouvez modifier votre photo de profil en cliquant sur l'icône appareil photo puis en enregistrant le formulaire à droite.</p>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Profile Form & History -->
+        <div class="col-lg-8">
+            <!-- Profile Edit Form -->
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white mb-5">
+                <h4 class="fw-bold mb-4" style="font-family: 'Outfit', sans-serif;">
+                    <i class="bi bi-person-gear text-primary me-2"></i>Modifier mes Informations
+                </h4>
+                
+                <!-- We share the same form instance -->
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form.first_name|as_crispy_field }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.last_name|as_crispy_field }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form.email|as_crispy_field }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.telephone|as_crispy_field }}
+                    </div>
+                </div>
+                
+                <h5 class="fw-bold mt-4 mb-3 text-secondary">Adresse de livraison par défaut</h5>
+                {{ form.adresse|as_crispy_field }}
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form.ville|as_crispy_field }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.code_postal|as_crispy_field }}
+                    </div>
+                </div>
+
+                <div class="mt-4 text-end">
+                    <button type="submit" class="btn btn-primary px-5 py-2.5 fw-bold shadow">
+                        Enregistrer les modifications
+                    </button>
+                </div>
+                </form> <!-- Close form opened in left column wrapper -->
+            </div>
+
+            <!-- Orders History Section (Last 5 orders) -->
+            <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="fw-bold mb-0" style="font-family: 'Outfit', sans-serif;">
+                        <i class="bi bi-clock-history text-primary me-2"></i>Mes Dernières Commandes
+                    </h4>
+                    <a href="{% url 'commandes:historique' %}" class="btn btn-outline-primary btn-sm fw-semibold">
+                        Voir tout l'historique
+                    </a>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table align-middle table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="border-0">N° Commande</th>
+                                <th class="border-0">Date</th>
+                                <th class="border-0">Articles</th>
+                                <th class="border-0">Total</th>
+                                <th class="border-0">Statut</th>
+                                <th class="border-0 text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cmd in commandes %}
+                                <tr>
+                                    <td><strong>#{{ cmd.id }}</strong></td>
+                                    <td>{{ cmd.date_commande }}</td>
+                                    <td>{{ cmd.nombre_articles }} article(s)</td>
+                                    <td class="fw-bold text-primary">{{ cmd.total_commande }} MAD</td>
+                                    <td>
+                                        <span class="status-badge statut-{{ cmd.statut }} border-0 shadow-none">
+                                            {{ cmd.statut_label }}
+                                        </span>
+                                    </td>
+                                    <td class="text-end">
+                                        <a href="{% url 'commandes:detail_commande' cmd.id %}" class="btn btn-light btn-sm fw-semibold border">
+                                            <i class="bi bi-eye"></i> Détails
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="6" class="text-center py-4 text-muted">
+                                        Vous n'avez pas encore passé de commande.
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

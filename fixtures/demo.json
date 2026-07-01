@@ -1,0 +1,260 @@
+[
+  {
+    "model": "catalogue.categorie",
+    "pk": 1,
+    "fields": {
+      "nom": "Laptops",
+      "slug": "laptops",
+      "image": "",
+      "description": "Ordinateurs portables gamer et bureautique.",
+      "est_active": true,
+      "date_creation": "2026-06-22T12:00:00Z"
+    }
+  },
+  {
+    "model": "catalogue.categorie",
+    "pk": 2,
+    "fields": {
+      "nom": "P\u00e9riph\u00e9riques",
+      "slug": "peripheriques",
+      "image": "",
+      "description": "Claviers, souris, casques et \u00e9crans.",
+      "est_active": true,
+      "date_creation": "2026-06-22T12:00:00Z"
+    }
+  },
+  {
+    "model": "catalogue.categorie",
+    "pk": 3,
+    "fields": {
+      "nom": "Composants",
+      "slug": "composants",
+      "image": "",
+      "description": "Processeurs, cartes graphiques, RAM et SSD.",
+      "est_active": true,
+      "date_creation": "2026-06-22T12:00:00Z"
+    }
+  },
+  {
+    "model": "catalogue.categorie",
+    "pk": 4,
+    "fields": {
+      "nom": "T\u00e9l\u00e9phones",
+      "slug": "telephones",
+      "image": "",
+      "description": "Smartphones et accessoires mobiles.",
+      "est_active": true,
+      "date_creation": "2026-06-22T12:00:00Z"
+    }
+  },
+  {
+    "model": "catalogue.produit",
+    "pk": 1,
+    "fields": {
+      "categorie": 1,
+      "nom": "ASUS ROG Strix G16 (2024)",
+      "slug": "asus-rog-strix-g16-2024",
+      "marque": "ASUS",
+      "reference": "ROG-G16-987",
+      "description": "Le PC portable de jeu ROG Strix G16 de 16 pouces offre des performances de pointe avec le processeur Intel Core i7 de 13e g\u00e9n\u00e9ration et la carte graphique NVIDIA GeForce RTX 4060. \u00c9cran FHD+ 165Hz, 16 Go de RAM DDR5 et 512 Go SSD NVMe. Syst\u00e8me de refroidissement ROG Intelligent Cooling pour des sessions intenses.",
+      "description_courte": "Intel i7-13650HX, RTX 4060, 16Go RAM, 512Go SSD, 165Hz.",
+      "image": "",
+      "prix": "15000.00",
+      "prix_promo": "13500.00",
+      "stock": 5,
+      "est_disponible": true,
+      "est_en_vedette": true,
+      "date_creation": "2026-06-22T12:00:00Z",
+      "date_modification": "2026-06-22T12:00:00Z"
+    }
+  },
+  {
+    "model": "catalogue.produit",
+    "pk": 2,
+    "fields": {
+      "categorie": 1,
+      "nom": "Apple MacBook Pro 14\" M3",
+      "slug": "apple-macbook-pro-14-m3",
+      "marque": "Apple",
+      "reference": "MBP-M3-456",
+      "description": "Le MacBook Pro 14 pouces int\u00e8gre la puce M3, offrant une vitesse et une efficacit\u00e9 \u00e9nerg\u00e9tique exceptionnelles. Autonomie record jusqu'\u00e0 22 heures, superbe \u00e9cran Liquid Retina XDR de 14,2 pouces et design ultra-fin en aluminium. 8 Go de m\u00e9moire unifi\u00e9e et 512 Go de stockage SSD.",
+      "description_courte": "Puce Apple M3, 8Go RAM, 512Go SSD, \u00c9cran Liquid Retina XDR.",
+      "image": "",
+      "prix": "24000.00",
+      "prix_promo": null,
+      "stock": 3,
+      "est_disponible": true,
+      "est_en_vedette": true,
+      "date_creation": "2026-06-22T12:00:00Z",
+      "date_modification": "2026-06-22T12:00:00Z"
+    }
+  },
+  {
+    "model": "catalogue.produit",
+    "pk": 3,
+    "fields": {
+      "categorie": 2,
+      "nom": "Razer BlackWidow V4 Pro",
+      "slug": "razer-blackwidow-v4-pro",
+      "marque": "Razer",
+      "reference": "RZ-BWV4-123",
+      "description": "Clavier m\u00e9canique de jeu haut de gamme \u00e9quip\u00e9 de switches verts Razer tactiles et cliquants. R\u00e9tro\u00e9clairage Razer Chroma RGB par touche et sous le ch\u00e2ssis, molette de commande multifonction et 8 touches macros d\u00e9di\u00e9es. Repose-poignet magn\u00e9tique en similicuir molletonn\u00e9 pour un confort ultime.",
+      "description_courte": "Clavier m\u00e9canique Gamer, Switchs verts, R\u00e9tro\u00e9clairage RGB Chroma.",
+      "image": "",
+      "prix": "1200.00",
+      "prix_promo": "999.00",
+      "stock": 15,
+      "est_disponible": true,
+      "est_en_vedette": false,
+      "date_creation": "2026-06-22T12:00:00Z",
+      "date_modification": "2026-06-22T12:00:00Z"
+    }
+  },
+  {
+    "model": "catalogue.produit",
+    "pk": 4,
+    "fields": {
+      "categorie": 2,
+      "nom": "Souris Logitech G502 Hero",
+      "slug": "souris-logitech-g502-hero",
+      "marque": "Logitech",
+      "reference": "LOG-G502-H",
+      "description": "La souris gaming la plus vendue au monde. Dispose d'un capteur optique HERO 25K de haute pr\u00e9cision, de 11 boutons programmables, d'un poids ajustable personnalis\u00e9 (5 poids de 3,6g fournis) et d'un \u00e9clairage RGB LIGHTSYNC enti\u00e8rement personnalisable. Roulette de d\u00e9filement d\u00e9brayable ultra-rapide.",
+      "description_courte": "Capteur HERO 25K (25600 DPI), 11 boutons programmables, Poids ajustables.",
+      "image": "",
+      "prix": "700.00",
+      "prix_promo": null,
+      "stock": 25,
+      "est_disponible": true,
+      "est_en_vedette": true,
+      "date_creation": "2026-06-22T12:00:00Z",
+      "date_modification": "2026-06-22T12:00:00Z"
+    }
+  },
+  {
+    "model": "catalogue.produit",
+    "pk": 5,
+    "fields": {
+      "categorie": 3,
+      "nom": "AMD Ryzen 7 7800X3D Processor",
+      "slug": "amd-ryzen-7-7800x3d-processor",
+      "marque": "AMD",
+      "reference": "AMD-R7-7800X3D",
+      "description": "Le processeur ultime pour les jeux vid\u00e9o sur PC avec la technologie AMD 3D V-Cache. Il dispose de 8 c\u0153urs physiques et 16 threads, d'un cache L3 massif de 96 Mo et d'une fr\u00e9quence boost jusqu'\u00e0 5.0 GHz sur socket AM5 (architecture Zen 4). Faible consommation d'\u00e9nergie et efficacit\u00e9 record.",
+      "description_courte": "Socket AM5, 8 Cores/16 Threads, 96Mo 3D V-Cache, Fr\u00e9quence Boost 5.0GHz.",
+      "image": "",
+      "prix": "4500.00",
+      "prix_promo": null,
+      "stock": 8,
+      "est_disponible": true,
+      "est_en_vedette": true,
+      "date_creation": "2026-06-22T12:00:00Z",
+      "date_modification": "2026-06-22T12:00:00Z"
+    }
+  },
+  {
+    "model": "catalogue.produit",
+    "pk": 6,
+    "fields": {
+      "categorie": 3,
+      "nom": "MSI RTX 4070 Ti Gaming X Slim 12G",
+      "slug": "msi-rtx-4070-ti-gaming-x-slim-12g",
+      "marque": "MSI",
+      "reference": "MSI-4070TI-SLIM",
+      "description": "Carte graphique haut de gamme avec architecture NVIDIA Ada Lovelace et refroidissement TRI FROZR 3. B\u00e9n\u00e9ficiez du Ray Tracing complet et de la technologie intelligente DLSS 3. Dispose de 12 Go de m\u00e9moire GDDR6X, de ventilateurs TORX FAN 5.0 et d'un format compact Slim.",
+      "description_courte": "NVIDIA GeForce RTX 4070 Ti, 12Go GDDR6X, Refroidissement Tri Frozr 3.",
+      "image": "",
+      "prix": "9500.00",
+      "prix_promo": "8999.00",
+      "stock": 4,
+      "est_disponible": true,
+      "est_en_vedette": true,
+      "date_creation": "2026-06-22T12:00:00Z",
+      "date_modification": "2026-06-22T12:00:00Z"
+    }
+  },
+  {
+    "model": "catalogue.produit",
+    "pk": 7,
+    "fields": {
+      "categorie": 4,
+      "nom": "iPhone 15 Pro Max 256GB - Titane Noir",
+      "slug": "iphone-15-pro-max-256gb-titane-noir",
+      "marque": "Apple",
+      "reference": "IP15PM-256-BK",
+      "description": "Le premier iPhone avec un design en titane de qualit\u00e9 a\u00e9rospatiale, int\u00e9grant la surpuissante puce A17 Pro. \u00c9cran Super Retina XDR Always-On de 6,7 pouces, syst\u00e8me photo de pointe avec zoom optique x5, et nouveau bouton Action personnalisable. Connectivit\u00e9 USB-C \u00e0 haute vitesse.",
+      "description_courte": "\u00c9cran Super Retina XDR 6.7\", Puce A17 Pro, 256Go de stockage.",
+      "image": "",
+      "prix": "16000.00",
+      "prix_promo": null,
+      "stock": 0,
+      "est_disponible": false,
+      "est_en_vedette": false,
+      "date_creation": "2026-06-22T12:00:00Z",
+      "date_modification": "2026-06-22T12:00:00Z"
+    }
+  },
+  {
+    "model": "catalogue.produit",
+    "pk": 8,
+    "fields": {
+      "categorie": 4,
+      "nom": "Samsung Galaxy S24 Ultra 512GB",
+      "slug": "samsung-galaxy-s24-ultra-512gb",
+      "marque": "Samsung",
+      "reference": "S24U-512-TI",
+      "description": "D\u00e9couvrez le pouvoir de la Galaxy AI. Un cadre robuste en titane entoure un somptueux \u00e9cran Dynamic AMOLED 2X de 6,8 pouces avec protection anti-reflets Gorilla Armor. \u00c9quip\u00e9 du stylet S Pen int\u00e9gr\u00e9, d'un processeur Snapdragon 8 Gen 3 et d'un capteur photo exceptionnel de 200 Mpx.",
+      "description_courte": "Galaxy AI, \u00c9cran 6.8\", Snapdragon 8 Gen 3, S Pen, Capteur photo 200Mpx.",
+      "image": "",
+      "prix": "14500.00",
+      "prix_promo": "13200.00",
+      "stock": 6,
+      "est_disponible": true,
+      "est_en_vedette": true,
+      "date_creation": "2026-06-22T12:00:00Z",
+      "date_modification": "2026-06-22T12:00:00Z"
+    }
+  },
+  {
+    "model": "catalogue.produit",
+    "pk": 9,
+    "fields": {
+      "categorie": 3,
+      "nom": "SSD Samsung 990 Pro M.2 NVMe 2To",
+      "slug": "ssd-samsung-990-pro-m2-nvme-2to",
+      "marque": "Samsung",
+      "reference": "SSD-SAM-990P-2T",
+      "description": "Atteignez des vitesses d'\u00e9criture et de lecture quasi maximales avec l'interface PCIe 4.0. Le SSD 990 Pro fournit des vitesses de lecture s\u00e9quentielle allant jusqu'\u00e0 7450 Mo/s et d'\u00e9criture jusqu'\u00e0 6900 Mo/s. Id\u00e9al pour les configurations gaming exigeantes et le traitement de donn\u00e9es lourdes.",
+      "description_courte": "Interface PCIe 4.0 NVMe, Lecture 7450 Mo/s, \u00c9criture 6900 Mo/s.",
+      "image": "",
+      "prix": "1800.00",
+      "prix_promo": null,
+      "stock": 12,
+      "est_disponible": true,
+      "est_en_vedette": false,
+      "date_creation": "2026-06-22T12:00:00Z",
+      "date_modification": "2026-06-22T12:00:00Z"
+    }
+  },
+  {
+    "model": "catalogue.produit",
+    "pk": 10,
+    "fields": {
+      "categorie": 2,
+      "nom": "\u00c9cran Gamer MSI Optix G274QPF-QD",
+      "slug": "ecran-gamer-msi-optix-g274qpf-qd",
+      "marque": "MSI",
+      "reference": "MSI-OPT-27QHD",
+      "description": "Moniteur gaming de 27 pouces avec dalle Rapid IPS de r\u00e9solution WQHD (2560 x 1440). Profitez d'un taux de rafra\u00eechissement fluide de 170Hz et d'un temps de r\u00e9ponse ultra-rapide de 1ms GtG. La technologie Quantum Dot offre des couleurs \u00e9clatantes et une couverture colorim\u00e9trique extr\u00eamement riche.",
+      "description_courte": "Rapid IPS 27\" WQHD, 170Hz, 1ms, Quantum Dot, compatible G-Sync.",
+      "image": "",
+      "prix": "3200.00",
+      "prix_promo": null,
+      "stock": 7,
+      "est_disponible": true,
+      "est_en_vedette": true,
+      "date_creation": "2026-06-22T12:00:00Z",
+      "date_modification": "2026-06-22T12:00:00Z"
+    }
+  }
+]

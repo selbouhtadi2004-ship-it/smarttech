@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Demander un devis | InnovaTech{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+        <h2 class="fw-bold">Demander un devis</h2>
+        <p class="text-muted">
+            Remplissez le formulaire ci-dessous et notre équipe vous contactera rapidement.
+        </p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <div class="card shadow border-0">
+                <div class="card-body p-4">
+
+                    <form>
+
+                        <div class="mb-3">
+                            <label class="form-label">Nom complet</label>
+                            <input type="text" class="form-control" placeholder="Votre nom">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Adresse Email</label>
+                            <input type="email" class="form-control" placeholder="exemple@email.com">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Téléphone</label>
+                            <input type="text" class="form-control" placeholder="+212 6 XX XX XX XX">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Produit souhaité</label>
+                            <input type="text" class="form-control" placeholder="Ex : ASUS ROG Strix G16">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Votre demande</label>
+                            <textarea class="form-control" rows="5" placeholder="Décrivez votre besoin..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-warning w-100 fw-bold">
+                            Envoyer la demande
+                        </button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

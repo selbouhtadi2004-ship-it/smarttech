@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mon Panier | InnovaTech{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb bg-white p-3 rounded shadow-sm">
+            <li class="breadcrumb-item"><a href="{% url 'catalogue:accueil' %}" class="text-decoration-none"><i class="bi bi-house-door-fill"></i> Accueil</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Mon Panier</li>
+        </ol>
+    </nav>
+
+    <h2 class="fw-bold mb-4" style="font-family: 'Outfit', sans-serif;">
+        <i class="bi bi-cart3 text-primary me-2"></i>Mon Panier
+    </h2>
+
+    {% if panier %}
+        <div class="row g-4">
+            <!-- Left Side: Items Table -->
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm rounded-4 bg-white p-3 p-md-4">
+                    <div class="table-responsive">
+                        <table class="table align-middle table-borderless">
+                            <thead class="border-bottom">
+                                <tr class="text-muted small">
+                                    <th class="py-3" style="min-width: 250px;">Produit</th>
+                                    <th class="py-3 text-center">Prix</th>
+                                    <th class="py-3 text-center" style="width: 150px;">Quantité</th>
+                                    <th class="py-3 text-end">Total</th>
+                                    <th class="py-3 text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in panier %}
+                                    <tr class="border-bottom-dashed">
+                                        <!-- Product info -->
+                                        <td class="py-3">
+                                            <div class="d-flex align-items-center gap-3">
+                                                <div class="border rounded p-1 bg-light" style="width: 65px; height: 65px; min-width: 65px;">
+                                                    {% if item.produit.image %}
+                                                        <img src="{{ item.produit.image }}" class="w-100 h-100 object-fit-contain" alt="{{ item.produit.nom }}">
+                                                    {% else %}
+                                                        <img src="https://placehold.co/100x100?text=CPU" class="w-100 h-100 object-fit-contain" alt="{{ item.produit.nom }}">
+                                                    {% endif %}
+                                                </div>
+                                                <div>
+                                                    <h6 class="fw-bold mb-0">
+                                                        <a href="{% url 'catalogue:detail_produit' item.produit.id item.produit.slug %}" class="text-decoration-none text-dark hover-primary small">
+                                                            {{ item.produit.nom }}
+                                                        </a>
+                                                    </h6>
+                                                    <span class="text-muted fs-8">Marque : {{ item.produit.marque }}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <!-- Unit Price -->
+                                        <td class="py-3 text-center">
+                                            <span class="fw-semibold">{{ item.prix }} MAD</span>
+                                        </td>
+                                        <!-- Quantity Form -->
+                                        <td class="py-3 text-center">
+                                            <form action="{% url 'panier:modifier' item.produit.id %}" method="POST" class="d-inline">
+                                                {% csrf_token %}
+                                                <div class="input-group quantity-selector mx-auto" style="max-width: 120px;">
+                                                    <button class="btn btn-outline-secondary btn-qty-minus btn-sm py-0" type="button"><i class="bi bi-minus"></i></button>
+                                                    <input type="number" class="form-control form-control-sm text-center input-qty py-0 fw-bold border-secondary-subtle" name="quantite" value="{{ item.quantite }}" min="1" max="{{ item.produit.stock }}" onchange="this.form.submit();">
+                                                    <button class="btn btn-outline-secondary btn-qty-plus btn-sm py-0" type="button"><i class="bi bi-plus"></i></button>
+                                                </div>
+                                            </form>
+                                        </td>
+                                        <!-- Total row price -->
+                                        <td class="py-3 text-end">
+                                            <span class="fw-bold text-primary">{{ item.prix_total }} MAD</span>
+                                        </td>
+                                        <!-- Delete action -->
+                                        <td class="py-3 text-center">
+                                            <a href="{% url 'panier:supprimer' item.produit.id %}" class="btn btn-light btn-sm text-danger border" title="Retirer l'article">
+                                                <i class="bi bi-trash3-fill"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Sticky Recap card -->
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm rounded-4 bg-white p-4 sticky-card">
+                    <h5 class="fw-bold mb-4 pb-2 border-bottom">Récapitulatif</h5>
+                    
+                    <div class="d-flex justify-content-between mb-3 text-muted">
+                        <span>Sous-total ({{ panier|length }} articles)</span>
+                        <span class="fw-semibold text-dark">{{ panier.get_total }} MAD</span>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mb-3 text-muted">
+                        <span>Frais de livraison</span>
+                        <span class="text-success fw-bold">Gratuit</span>
+                    </div>
+
+                    <div class="p-3 bg-light rounded-3 mb-4">
+                        <div class="d-flex align-items-center gap-2 text-success fw-bold small mb-1">
+                            <i class="bi bi-cash-stack"></i>
+                            <span>Paiement à la livraison</span>
+                        </div>
+                        <p class="text-muted small mb-0">Pas besoin de carte bancaire, payez en espèces au livreur lors de la réception.</p>
+                    </div>
+
+                    <hr class="my-3">
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <span class="fw-bold fs-5 text-dark">Total</span>
+                        <span class="fw-extrabold fs-4 text-primary" style="font-family: 'Outfit', sans-serif;">{{ panier.get_total }} MAD</span>
+                    </div>
+
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'commandes:checkout' %}" class="btn btn-primary btn-lg w-100 py-3 fw-bold shadow d-flex align-items-center justify-content-center gap-2">
+                            Passer à la Caisse <i class="bi bi-arrow-right"></i>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'comptes:connexion' %}?next={% url 'commandes:checkout' %}" class="btn btn-warning btn-lg w-100 py-3 fw-bold text-dark d-flex align-items-center justify-content-center gap-2">
+                            <i class="bi bi-box-arrow-in-right"></i> Se connecter pour commander
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <!-- Empty cart message -->
+        <div class="row justify-content-center py-5">
+            <div class="col-md-6 text-center">
+                <div class="bg-white p-5 rounded-4 shadow-sm">
+                    <i class="bi bi-cart-x text-muted" style="font-size: 5rem;"></i>
+                    <h3 class="fw-bold mt-4">Votre panier est vide</h3>
+                    <p class="text-muted">Il semble que vous n'ayez aucun article dans votre panier. Parcourez notre catalogue pour découvrir nos meilleures offres.</p>
+                    <a href="{% url 'catalogue:liste_produits' %}" class="btn btn-primary btn-lg px-4 mt-3 shadow">
+                        Continuer mes achats
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

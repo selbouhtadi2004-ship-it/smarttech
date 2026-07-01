@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}InnovaTech | Vente Matériel Informatique Maroc{% endblock %}
+
+{% block content %}
+<!-- Hero Carousel Section (Iris.ma Style) -->
+<div class="position-relative container mb-4">
+    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <!-- Slide 1: MacBook Neo -->
+            <div class="carousel-item active">
+                <div class="hero-slider-container">
+                    <div class="row align-items-center g-4">
+                        <div class="col-lg-7 text-start ps-lg-5">
+                            <span class="hero-slider-logo"><i class="bi bi-apple"></i></span>
+                            <h1 class="hero-slider-title">Apple MacBook Neo 13</h1>
+                            <p class="hero-slider-subtitle">Le nouveau portable qui attire tous les regards.</p>
+                            
+                            <p class="mb-2 text-muted fw-bold small">4 couleurs au choix</p>
+                            <div class="hero-color-options">
+                                <div class="color-option-item">
+                                    <span class="color-circle" style="background-color: #cbd5e1;" title="Argent"></span>
+                                    <span>Argent</span>
+                                </div>
+                                <div class="color-option-item">
+                                    <span class="color-circle" style="background-color: #fbcfe8;" title="Rose poudré"></span>
+                                    <span>Rose poudré</span>
+                                </div>
+                                <div class="color-option-item">
+                                    <span class="color-circle" style="background-color: #fef08a;" title="Jaune agrume"></span>
+                                    <span>Jaune agrume</span>
+                                </div>
+                                <div class="color-option-item">
+                                    <span class="color-circle" style="background-color: #1e3a8a;" title="Indigo"></span>
+                                    <span>Indigo</span>
+                                </div>
+                            </div>
+
+                            <a href="{% url 'catalogue:liste_produits' %}?q=apple" class="hero-cta-btn text-white">
+                                Découvrir <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                        <div class="col-lg-5 text-center">
+                            <div class="hero-slider-images">
+                                <img src="{% static 'images/macbook_neo.png' %}" alt="MacBook Neo 13" class="hero-slider-img">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Slide 2: High Tech components -->
+            <div class="carousel-item">
+                <div class="hero-slider-container" style="background: linear-gradient(135deg, #111827 0%, #1f2937 100%);">
+                    <div class="row align-items-center g-4">
+                        <div class="col-lg-7 text-start ps-lg-5">
+                            <span class="hero-slider-logo text-warning"><i class="bi bi-cpu"></i></span>
+                            <h1 class="hero-slider-title text-white">Composants & Gaming</h1>
+                            <p class="hero-slider-subtitle text-white-50">Boostez votre configuration avec les meilleures cartes graphiques et processeurs du marché marocain.</p>
+                            <a href="{% url 'catalogue:liste_categorie' 'composants' %}" class="hero-cta-btn text-white" style="background: var(--primary); box-shadow: 0 4px 14px rgba(255, 159, 0, 0.4);">
+                                Voir le catalogue <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                        <div class="col-lg-5 text-center py-4">
+                            <div class="hero-slider-images">
+                                <i class="bi bi-cpu text-warning" style="font-size: 12rem; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.35));"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <button class="slider-arrow slider-arrow-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <i class="bi bi-chevron-left"></i>
+        </button>
+        <button class="slider-arrow slider-arrow-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <i class="bi bi-chevron-right"></i>
+        </button>
+    </div>
+    
+    <!-- Dots Indicator -->
+    <div class="slider-dots mb-4">
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="slider-dot active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" class="slider-dot" aria-label="Slide 2"></button>
+    </div>
+</div>
+
+<!-- Advantages Bar -->
+<section class="advantages-bar shadow-sm rounded-4 mb-5 mx-2 mx-md-0">
+    <div class="container">
+        <div class="row g-4 text-center text-md-start">
+            <div class="col-md-4">
+                <div class="advantage-item justify-content-center justify-content-md-start">
+                    <div class="advantage-icon bg-light p-3 rounded-circle">
+                        <i class="bi bi-truck"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-1">Livraison Gratuite (COD)</h6>
+                        <p class="text-muted small mb-0">Livraison partout au Maroc. Payez en espèces à la livraison !</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 border-md-start">
+                <div class="advantage-item justify-content-center justify-content-md-start">
+                    <div class="advantage-icon bg-light p-3 rounded-circle">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-1">Garantie & Authenticité</h6>
+                        <p class="text-muted small mb-0">Tous nos produits sont 100% originaux et sous garantie constructeur.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 border-md-start">
+                <div class="advantage-item justify-content-center justify-content-md-start">
+                    <div class="advantage-icon bg-light p-3 rounded-circle">
+                        <i class="bi bi-headset"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-1">Support Client 6j/7</h6>
+                        <p class="text-muted small mb-0">Une équipe d'experts à votre écoute pour vous conseiller.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section class="mb-5">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold" style="font-family: 'Outfit', sans-serif;">Parcourir les Catégories</h2>
+            <p class="text-muted">Trouvez rapidement le matériel adapté à vos besoins</p>
+        </div>
+        <div class="row g-4">
+            {% for cat in categories %}
+                <div class="col-6 col-lg-3">
+                    <a href="{% url 'catalogue:liste_categorie' cat.slug %}" class="category-card shadow-sm text-decoration-none">
+                        <div class="category-icon-wrapper shadow-sm">
+                            <i class="bi {{ cat.icon }}"></i>
+                        </div>
+                        <h5>{{ cat.nom }}</h5>
+                        <p class="text-muted small d-none d-md-block mb-0">{{ cat.description }}</p>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products Section -->
+<section id="featured-products" class="mb-5">
+    <div class="container">
+        <div class="d-flex align-items-center justify-content-between mb-4 border-bottom pb-2">
+            <h3 class="fw-bold mb-0" style="font-family: 'Outfit', sans-serif;">
+                <i class="bi bi-star-fill text-warning me-2"></i>Produits en Vedette
+            </h3>
+            <a href="{% url 'catalogue:liste_produits' %}" class="btn btn-link text-decoration-none fw-semibold">
+                Voir tout <i class="bi bi-chevron-right"></i>
+            </a>
+        </div>
+        <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+            {% for produit in produits_vedette %}
+                <div class="col">
+                    {% include 'catalogue/_carte_produit.html' with produit=produit %}
+                </div>
+            {% empty %}
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">Aucun produit en vedette actuellement.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- New Arrivals Section -->
+<section class="mb-5">
+    <div class="container">
+        <div class="d-flex align-items-center justify-content-between mb-4 border-bottom pb-2">
+            <h3 class="fw-bold mb-0" style="font-family: 'Outfit', sans-serif;">
+                <i class="bi bi-plus-circle text-primary me-2"></i>Nouveautés
+            </h3>
+            <a href="{% url 'catalogue:liste_produits' %}" class="btn btn-link text-decoration-none fw-semibold">
+                Voir tout <i class="bi bi-chevron-right"></i>
+            </a>
+        </div>
+        <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+            {% for produit in nouveautes %}
+                <div class="col">
+                    {% include 'catalogue/_carte_produit.html' with produit=produit %}
+                </div>
+            {% empty %}
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">Aucun nouveau produit disponible pour le moment.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

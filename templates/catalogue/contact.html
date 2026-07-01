@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contactez-nous | InnovaTech{% endblock %}
+
+{% block content %}
+
+<!-- Hero -->
+<section class="bg-dark text-white py-5">
+    <div class="container text-center">
+        <h1 class="fw-bold display-5">Contactez-nous</h1>
+        <p class="lead mt-3">
+            Notre équipe est à votre disposition pour répondre à toutes vos questions.
+        </p>
+    </div>
+</section>
+
+<!-- Contact -->
+<section class="py-5">
+    <div class="container">
+
+        <div class="row g-5">
+
+            <!-- Formulaire -->
+            <div class="col-lg-7">
+
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+
+                        <h3 class="fw-bold mb-4">
+                            Envoyez-nous un message
+                        </h3>
+
+                        <form>
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Nom complet</label>
+                                    <input type="text" class="form-control" placeholder="Votre nom">
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Adresse e-mail</label>
+                                    <input type="email" class="form-control" placeholder="email@example.com">
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Téléphone</label>
+                                    <input type="text" class="form-control" placeholder="+212 5 22 49 39 89">
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Sujet</label>
+                                    <input type="text" class="form-control" placeholder="Sujet">
+                                </div>
+
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label">Message</label>
+                                <textarea class="form-control" rows="6"
+                                    placeholder="Écrivez votre message..."></textarea>
+                            </div>
+
+                            <button class="btn btn-warning btn-lg px-5">
+                                <i class="bi bi-send-fill me-2"></i>
+                                Envoyer
+                            </button>
+
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Informations -->
+            <div class="col-lg-5">
+
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+
+                        <h4 class="fw-bold mb-4">
+                            Nos coordonnées
+                        </h4>
+
+                        <p>
+                            <i class="bi bi-geo-alt-fill text-warning me-2"></i>
+                            Casablanca, Maroc
+                        </p>
+
+                        <p>
+                            <i class="bi bi-telephone-fill text-warning me-2"></i>
+                            +212 5 22 49 39 89
+                        </p>
+
+                        <p>
+                            <i class="bi bi-envelope-fill text-warning me-2"></i>
+                            service.client@innovatech.ma
+                        </p>
+
+                        <p>
+                            <i class="bi bi-clock-fill text-warning me-2"></i>
+                            Lundi - Samedi
+                            <br>
+                            09:00 - 19:00
+                        </p>
+
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body text-center">
+
+                        <h5 class="fw-bold mb-3">
+                            WhatsApp
+                        </h5>
+
+                        <a href="https://wa.me/21252493989" target="_blank" class="btn btn-success w-100">
+
+                            <i class="bi bi-whatsapp me-2"></i>
+
+                            Discuter avec nous
+
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- Google Maps -->
+<section class="pb-5">
+    <div class="container">
+
+        <div class="text-center mb-4">
+            <h2 class="fw-bold">📍 Notre localisation</h2>
+            <p class="text-muted">
+                Retrouvez-nous facilement à notre siège à Casablanca.
+            </p>
+        </div>
+
+        <div class="card border-0 shadow-lg overflow-hidden rounded-4">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d53196.94711147226!2d-7.584105876547471!3d33.55833347659487!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda7d282df5a7ad5%3A0xc5e94bd1f59a26e7!2sINNOVATECH%20ENGINEERING!5e0!3m2!1sar!2sma!4v1782932167337!5m2!1sar!2sma"
+                width="100%" height="450" style="border:0;" allowfullscreen loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin">
+            </iframe>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Validation de commande | InnovaTech{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb bg-white p-3 rounded shadow-sm">
+            <li class="breadcrumb-item"><a href="{% url 'catalogue:accueil' %}" class="text-decoration-none"><i
+                        class="bi bi-house-door-fill"></i> Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'panier:panier_detail' %}" class="text-decoration-none">Mon
+                    Panier</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Commande</li>
+        </ol>
+    </nav>
+
+    <h2 class="fw-bold mb-4" style="font-family: 'Outfit', sans-serif;">Passer la commande</h2>
+
+    <div class="row g-4">
+        <!-- Left Side: Shipping & Billing Form -->
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm rounded-4 bg-white p-4 p-md-5">
+                <h4 class="fw-bold mb-4 text-dark" style="font-family: 'Outfit', sans-serif;">
+                    <i class="bi bi-truck text-primary me-2"></i>Informations de Livraison
+                </h4>
+
+                <form method="POST" action="{% url 'commandes:checkout' %}" novalidate>
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            {{ form.nom_complet|as_crispy_field }}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ form.email|as_crispy_field }}
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.telephone|as_crispy_field }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.adresse_livraison|as_crispy_field }}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            {{ form.ville|as_crispy_field }}
+                        </div>
+                        <div class="col-sm-6">
+                            {{ form.code_postal|as_crispy_field }}
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        {{ form.notes|as_crispy_field }}
+                    </div>
+
+
+
+                    <h5 class="fw-bold mb-3 mt-4 text-dark">
+                        <i class="bi bi-wallet2 text-primary me-2"></i>
+                        Mode de Paiement
+                    </h5>
+
+                    <div class="form-check border rounded-3 p-3 mb-3">
+                        <input class="form-check-input" type="radio" name="mode_paiement" id="carte" value="carte"
+                            checked>
+
+                        <label class="form-check-label w-100 ms-2" for="carte">
+                            <i class="bi bi-credit-card-fill text-primary me-2"></i>
+                            <strong>Carte bancaire</strong><br>
+                            <small class="text-muted">
+                                Paiement sécurisé par Visa ou Mastercard.
+                            </small>
+                        </label>
+                    </div>
+
+                    <div class="form-check border rounded-3 p-3 mb-3">
+                        <input class="form-check-input" type="radio" name="mode_paiement" id="cod" value="cod">
+
+                        <label class="form-check-label w-100 ms-2" for="cod">
+                            <i class="bi bi-cash-stack text-success me-2"></i>
+                            <strong>Paiement à la livraison</strong><br>
+                            <small class="text-muted">
+                                Payez votre commande à la réception.
+                            </small>
+                        </label>
+                    </div>
+
+                    <div class="form-check border rounded-3 p-3 mb-4">
+                        <input class="form-check-input" type="radio" name="mode_paiement" id="virement"
+                            value="virement">
+
+                        <label class="form-check-label w-100 ms-2" for="virement">
+                            <i class="bi bi-bank text-warning me-2"></i>
+                            <strong>Virement bancaire</strong><br>
+                            <small class="text-muted">
+                                La commande sera validée après réception du virement.
+                            </small>
+                        </label>
+                    </div>
+
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg w-100 py-3 fw-bold shadow">
+                            <i class="bi bi-check-circle-fill me-2"></i>
+                            Confirmer ma commande
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right Side: Order Recap -->
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm rounded-4 bg-white p-4 sticky-card">
+                <h5 class="fw-bold mb-4 pb-2 border-bottom">Détails du Panier</h5>
+
+                <!-- Articles List -->
+                <div class="mb-4 overflow-y-auto" style="max-height: 280px;">
+                    {% for item in panier %}
+                    <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-light">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="border rounded p-1 bg-light" style="width: 50px; height: 50px;">
+                                {% if item.produit.image %}
+                                <img src="{{ item.produit.image }}" class="w-100 h-100 object-fit-contain"
+                                    alt="{{ item.produit.nom }}">
+                                {% else %}
+                                <img src="https://placehold.co/100x100?text=CPU" class="w-100 h-100 object-fit-contain"
+                                    alt="{{ item.produit.nom }}">
+                                {% endif %}
+                            </div>
+                            <div style="max-width: 200px;">
+                                <h6 class="fw-bold mb-0 text-truncate small">{{ item.produit.nom }}</h6>
+                                <span class="text-muted small fs-8">Qté : {{ item.quantite }} x {{ item.prix }}
+                                    MAD</span>
+                            </div>
+                        </div>
+                        <span class="fw-bold text-dark small">{{ item.prix_total }} MAD</span>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="d-flex justify-content-between mb-3 text-muted">
+                    <span>Sous-total</span>
+                    <span class="fw-semibold text-dark">{{ panier.get_total }} MAD</span>
+                </div>
+
+                <div class="d-flex justify-content-between mb-3 text-muted">
+                    <span>Frais de livraison</span>
+                    <span class="text-success fw-bold">Gratuit</span>
+                </div>
+
+                <hr class="my-3">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="fw-bold text-dark">Total de la commande</span>
+                    <span class="fw-extrabold fs-4 text-primary" style="font-family: 'Outfit', sans-serif;">{{
+                        panier.get_total }} MAD</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

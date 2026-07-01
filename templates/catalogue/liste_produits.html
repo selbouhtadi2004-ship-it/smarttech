@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {% if categorie %}
+        {{ categorie.nom }} | InnovaTech
+    {% else %}
+        Tous les produits | InnovaTech
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb bg-white p-3 rounded shadow-sm">
+            <li class="breadcrumb-item"><a href="{% url 'catalogue:accueil' %}" class="text-decoration-none"><i class="bi bi-house-door-fill"></i> Accueil</a></li>
+            {% if categorie %}
+                <li class="breadcrumb-item"><a href="{% url 'catalogue:liste_produits' %}" class="text-decoration-none">Catalogue</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ categorie.nom }}</li>
+            {% else %}
+                <li class="breadcrumb-item active" aria-current="page">Tous les produits</li>
+            {% endif %}
+        </ol>
+    </nav>
+
+    <!-- Page Title / Header -->
+    <div class="row mb-4">
+        <div class="col">
+            <div class="p-4 bg-white rounded-4 shadow-sm border-0 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                <div>
+                    <h2 class="fw-bold mb-1" style="font-family: 'Outfit', sans-serif;">
+                        {% if categorie %}{{ categorie.nom }}{% else %}Tous les produits{% endif %}
+                    </h2>
+                    <p class="text-muted small mb-0">
+                        {% if categorie %}{{ categorie.description }}{% else %}Découvrez notre gamme complète de produits informatiques de haute qualité.{% endif %}
+                    </p>
+                </div>
+                <!-- Sort Dropdown Form -->
+                <div class="d-flex align-items-center gap-2">
+                    <label for="tri-select" class="text-nowrap text-muted small fw-semibold">Trier par :</label>
+                    <form method="GET" class="d-inline" id="sortForm">
+                        <select name="tri" id="tri-select" class="form-select form-select-sm border-secondary-subtle" onchange="document.getElementById('sortForm').submit();">
+                            <option value="recent" {% if tri_actif == 'recent' %}selected{% endif %}>Plus récents</option>
+                            <option value="prix_asc" {% if tri_actif == 'prix_asc' %}selected{% endif %}>Prix : croissant</option>
+                            <option value="prix_desc" {% if tri_actif == 'prix_desc' %}selected{% endif %}>Prix : décroissant</option>
+                            <option value="nom" {% if tri_actif == 'nom' %}selected{% endif %}>Nom : A-Z</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Section with Filters Sidebar & Grid -->
+    <div class="row g-4">
+        <!-- Sidebar filters (hidden on mobile, expandable or simple list) -->
+        <div class="col-lg-3">
+            <div class="bg-white p-4 rounded-4 shadow-sm border-0 sticky-card">
+                <h5 class="fw-bold mb-3 pb-2 border-bottom">Catégories</h5>
+                <div class="list-group list-group-flush">
+                    <a href="{% url 'catalogue:liste_produits' %}" class="list-group-item list-group-item-action border-0 px-0 d-flex justify-content-between align-items-center {% if not categorie %}text-primary fw-bold{% else %}text-muted{% endif %}">
+                        <span><i class="bi bi-grid-fill me-2"></i>Tous les produits</span>
+                    </a>
+                    {% for cat in categories %}
+                        <a href="{% url 'catalogue:liste_categorie' cat.slug %}" class="list-group-item list-group-item-action border-0 px-0 d-flex justify-content-between align-items-center {% if categorie.slug == cat.slug %}text-primary fw-bold{% else %}text-muted{% endif %}">
+                            <span><i class="bi {{ cat.icon }} me-2"></i>{{ cat.nom }}</span>
+                            <span class="badge bg-light text-dark rounded-pill border"></span>
+                        </a>
+                    {% endfor %}
+                </div>
+                
+                <hr class="my-4">
+
+                <h5 class="fw-bold mb-3 pb-2 border-bottom">Paiement Accepté</h5>
+                <div class="d-flex align-items-center gap-2 text-success fw-bold py-1">
+                    <i class="bi bi-wallet2 fs-4"></i>
+                    <span>Cash à la Livraison (COD)</span>
+                </div>
+                <p class="text-muted small mt-2">Nous livrons chez vous partout au Maroc. Vous payez en espèces uniquement au moment de la réception de votre colis.</p>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="col-lg-9">
+            <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-md-3">
+                {% for prod in produits %}
+                    <div class="col">
+                        {% include 'catalogue/_carte_produit.html' with produit=prod %}
+                    </div>
+                {% empty %}
+                    <div class="col-12 text-center py-5">
+                        <div class="bg-white p-5 rounded-4 shadow-sm">
+                            <i class="bi bi-exclamation-circle text-muted" style="font-size: 3rem;"></i>
+                            <h5 class="fw-bold mt-3">Aucun produit trouvé</h5>
+                            <p class="text-muted">Il n'y a pas de produits correspondant à cette catégorie actuellement.</p>
+                            <a href="{% url 'catalogue:liste_produits' %}" class="btn btn-primary mt-2">Retour au catalogue complet</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

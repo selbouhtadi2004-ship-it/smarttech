@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Recherche : "{{ query }}" | InnovaTech{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb bg-white p-3 rounded shadow-sm">
+            <li class="breadcrumb-item"><a href="{% url 'catalogue:accueil' %}" class="text-decoration-none"><i class="bi bi-house-door-fill"></i> Accueil</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Recherche</li>
+        </ol>
+    </nav>
+
+    <!-- Search Header -->
+    <div class="row mb-4">
+        <div class="col">
+            <div class="p-4 bg-white rounded-4 shadow-sm border-0">
+                <h2 class="fw-bold mb-1" style="font-family: 'Outfit', sans-serif;">
+                    Résultats de recherche
+                </h2>
+                <p class="text-muted small mb-0">
+                    {% if query %}
+                        {{ produits|length }} produit(s) trouvé(s) pour le mot-clé : <strong class="text-primary">"{{ query }}"</strong>
+                    {% else %}
+                        Veuillez saisir un mot-clé pour lancer une recherche.
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    {% if query %}
+        <div class="row g-4">
+            <!-- Sidebar info -->
+            <div class="col-lg-3">
+                <div class="bg-white p-4 rounded-4 shadow-sm border-0 sticky-card">
+                    <h5 class="fw-bold mb-3 pb-2 border-bottom">Filtrer par catégorie</h5>
+                    <div class="list-group list-group-flush">
+                        {% for cat in categories %}
+                            <a href="{% url 'catalogue:liste_categorie' cat.slug %}" class="list-group-item list-group-item-action border-0 px-0 d-flex justify-content-between align-items-center text-muted">
+                                <span><i class="bi {{ cat.icon }} me-2"></i>{{ cat.nom }}</span>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Grid Results -->
+            <div class="col-lg-9">
+                <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-md-3">
+                    {% for prod in produits %}
+                        <div class="col">
+                            {% include 'catalogue/_carte_produit.html' with produit=prod %}
+                        </div>
+                    {% empty %}
+                        <div class="col-12 text-center py-5">
+                            <div class="bg-white p-5 rounded-4 shadow-sm">
+                                <i class="bi bi-search-heart text-muted" style="font-size: 3rem;"></i>
+                                <h5 class="fw-bold mt-3">Aucun résultat trouvé</h5>
+                                <p class="text-muted">Désolé, aucun produit ne correspond à votre recherche. Vérifiez l'orthographe ou essayez d'autres termes.</p>
+                                <a href="{% url 'catalogue:liste_produits' %}" class="btn btn-primary mt-2">Parcourir tout le catalogue</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <!-- Empty search input help -->
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center py-5">
+                <div class="bg-white p-5 rounded-4 shadow-sm">
+                    <i class="bi bi-search text-primary" style="font-size: 4rem;"></i>
+                    <h4 class="fw-bold mt-4">Que recherchez-vous ?</h4>
+                    <p class="text-muted">Entrez le nom, la marque ou la référence du matériel informatique que vous recherchez.</p>
+                    <form action="{% url 'catalogue:recherche' %}" method="GET" class="mt-4">
+                        <div class="input-group">
+                            <input class="form-control form-control-lg border" type="search" placeholder="Rechercher..." name="q" required>
+                            <button class="btn btn-primary px-4" type="submit">Rechercher</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

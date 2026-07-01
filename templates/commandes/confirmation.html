@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Confirmation de commande #{{ commande.id }} | InnovaTech{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10 text-center">
+            <!-- Success Icon Animation Card -->
+            <div class="card border-0 shadow-lg rounded-4 p-5 bg-white mb-4">
+                <div class="mb-4">
+                    <div class="mx-auto rounded-circle bg-success bg-opacity-10 d-flex align-items-center justify-content-center" style="width: 90px; height: 90px;">
+                        <i class="bi bi-patch-check-fill text-success" style="font-size: 4rem;"></i>
+                    </div>
+                </div>
+                
+                <h1 class="fw-bold mb-2" style="font-family: 'Outfit', sans-serif;">Merci pour votre commande !</h1>
+                <p class="text-muted mb-4 fs-5">Votre commande <strong class="text-primary">#{{ commande.id }}</strong> a été enregistrée avec succès et est en attente de validation par notre équipe.</p>
+                
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{% url 'catalogue:accueil' %}" class="btn btn-primary px-4 py-2.5 fw-bold shadow">
+                        Retourner à l'accueil
+                    </a>
+                    <a href="{% url 'commandes:detail_commande' commande.id %}" class="btn btn-outline-secondary px-4 py-2.5 fw-bold">
+                        Suivre ma commande
+                    </a>
+                </div>
+            </div>
+
+            <!-- Order recap card -->
+            <div class="card border-0 shadow-sm rounded-4 text-start bg-white p-4 p-md-5">
+                <h4 class="fw-bold mb-4" style="font-family: 'Outfit', sans-serif;">Détails de la Commande</h4>
+                
+                <!-- Articles Table -->
+                <div class="table-responsive mb-4">
+                    <table class="table align-middle">
+                        <thead class="table-light">
+                            <tr class="small text-muted">
+                                <th>Article</th>
+                                <th class="text-center">Prix Unitaire</th>
+                                <th class="text-center">Quantité</th>
+                                <th class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for article in commande.articles.all %}
+                                <tr>
+                                    <td>
+                                        <h6 class="fw-bold mb-0 text-dark">{{ article.nom_produit }}</h6>
+                                    </td>
+                                    <td class="text-center">{{ article.prix_unitaire }} MAD</td>
+                                    <td class="text-center">{{ article.quantite }}</td>
+                                    <td class="text-end fw-bold text-primary">{{ article.get_total }} MAD</td>
+                                </tr>
+                            {% endfor %}
+                            <tr class="border-top">
+                                <td colspan="3" class="text-end text-muted small">Sous-total :</td>
+                                <td class="text-end fw-semibold">{{ commande.total_produits }} MAD</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="text-end text-muted small">Livraison :</td>
+                                <td class="text-end text-success fw-bold">Gratuit</td>
+                            </tr>
+                            <tr class="fs-5 fw-bold">
+                                <td colspan="3" class="text-end text-dark">Total à payer :</td>
+                                <td class="text-end text-primary" style="font-family: 'Outfit', sans-serif;">{{ commande.total_commande }} MAD</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Info Grid -->
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <h6 class="fw-bold text-secondary text-uppercase fs-8 mb-2">Adresse de Livraison</h6>
+                        <address class="text-muted mb-0 small lh-lg">
+                            <strong>{{ commande.nom_complet }}</strong><br>
+                            {{ commande.adresse_livraison }}<br>
+                            {{ commande.code_postal }} {{ commande.ville }}<br>
+                            Tél : {{ commande.telephone }}
+                        </address>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="fw-bold text-secondary text-uppercase fs-8 mb-2">Mode de Paiement</h6>
+                        <div class="d-flex align-items-center gap-2 text-success fw-bold mb-2">
+                            <i class="bi bi-cash-stack fs-5"></i>
+                            <span>Cash à la Livraison</span>
+                        </div>
+                        <p class="text-muted small mb-0">Le livreur collectera la somme totale de <strong>{{ commande.total_commande }} MAD</strong> au moment de la livraison de votre colis.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

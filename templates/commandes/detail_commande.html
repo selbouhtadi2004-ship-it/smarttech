@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Commande #{{ commande.id }} | InnovaTech{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb bg-white p-3 rounded shadow-sm">
+            <li class="breadcrumb-item"><a href="{% url 'catalogue:accueil' %}" class="text-decoration-none"><i class="bi bi-house-door-fill"></i> Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'commandes:historique' %}" class="text-decoration-none">Mes Commandes</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Détails #{{ commande.id }}</li>
+        </ol>
+    </nav>
+
+    <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white mb-4">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 pb-3 border-bottom">
+            <div>
+                <h2 class="fw-bold mb-1" style="font-family: 'Outfit', sans-serif;">Détails de la commande #{{ commande.id }}</h2>
+                <p class="text-muted small mb-0">Passée le {{ commande.date_commande|date:"d F Y à H:i" }}</p>
+            </div>
+            <div>
+                <span class="status-badge statut-{{ commande.statut }} fs-6 px-4 py-2">
+                    {{ commande.get_statut_display }}
+                </span>
+            </div>
+        </div>
+
+        <div class="row g-4 mb-5">
+            <!-- Delivery address card -->
+            <div class="col-md-6">
+                <div class="card bg-light border-0 rounded-3 p-4 h-100">
+                    <h6 class="fw-bold text-uppercase fs-8 text-secondary mb-3"><i class="bi bi-geo-alt-fill me-2 text-primary"></i>Adresse de Livraison</h6>
+                    <address class="text-muted mb-0 small lh-lg">
+                        <strong>{{ commande.nom_complet }}</strong><br>
+                        {{ commande.adresse_livraison }}<br>
+                        {{ commande.code_postal }} {{ commande.ville }}<br>
+                        Tél : {{ commande.telephone }}<br>
+                        Email : {{ commande.email }}
+                    </address>
+                </div>
+            </div>
+            
+            <!-- Payment information card -->
+            <div class="col-md-6">
+                <div class="card bg-light border-0 rounded-3 p-4 h-100">
+                    <h6 class="fw-bold text-uppercase fs-8 text-secondary mb-3"><i class="bi bi-wallet2 me-2 text-primary"></i>Mode de Paiement & Notes</h6>
+                    <div class="d-flex align-items-center gap-2 text-success fw-bold small mb-2">
+                        <i class="bi bi-cash-stack"></i>
+                        <span>Cash à la Livraison (COD)</span>
+                    </div>
+                    <p class="text-muted small mb-3">Paiement collecté en espèces par le livreur lors de la remise de votre colis.</p>
+                    
+                    {% if commande.notes %}
+                        <h6 class="fw-bold text-secondary fs-8 mb-1">Instructions :</h6>
+                        <p class="text-muted small mb-0 font-monospace">{{ commande.notes }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Ordered items table -->
+        <h4 class="fw-bold mb-3" style="font-family: 'Outfit', sans-serif;">Articles Commandés</h4>
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead class="table-light">
+                    <tr class="small text-muted">
+                        <th>Produit</th>
+                        <th class="text-center">Prix Unitaire</th>
+                        <th class="text-center">Quantité</th>
+                        <th class="text-end">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for article in commande.articles.all %}
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="border rounded p-1 bg-light" style="width: 50px; height: 50px;">
+                                        {% if article.produit and article.produit.image %}
+                                            <img src="{{ article.produit.image.url }}" class="w-100 h-100 object-fit-contain" alt="{{ article.nom_produit }}">
+                                        {% else %}
+                                            <img src="https://placehold.co/100x100?text=CPU" class="w-100 h-100 object-fit-contain" alt="{{ article.nom_produit }}">
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-0 text-dark small">{{ article.nom_produit }}</h6>
+                                        {% if article.produit %}
+                                            <span class="text-muted fs-8">Réf : {{ article.produit.reference }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-center">{{ article.prix_unitaire }} MAD</td>
+                            <td class="text-center">{{ article.quantite }}</td>
+                            <td class="text-end fw-bold text-primary">{{ article.get_total }} MAD</td>
+                        </tr>
+                    {% endfor %}
+                    <tr class="border-top">
+                        <td colspan="3" class="text-end text-muted small">Sous-total :</td>
+                        <td class="text-end fw-semibold">{{ commande.total_produits }} MAD</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text-end text-muted small">Frais de livraison :</td>
+                        <td class="text-end text-success fw-bold">Gratuit</td>
+                    </tr>
+                    <tr class="fs-5 fw-bold">
+                        <td colspan="3" class="text-end text-dark">Total payé/à payer :</td>
+                        <td class="text-end text-primary" style="font-family: 'Outfit', sans-serif;">{{ commande.total_commande }} MAD</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
