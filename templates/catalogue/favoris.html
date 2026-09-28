@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+Mes Favoris
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h2 class="mb-4">
+        ❤️ Mes Favoris
+    </h2>
+
+    <div class="row">
+
+        {% if favoris %}
+
+        {% for item in favoris %}
+
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            {% include "catalogue/_carte_produit.html" with produit=item.produit %}
+        </div>
+
+        {% endfor %}
+
+        {% else %}
+
+        <div class="col-12 text-center">
+
+            <h4>Aucun produit dans les favoris.</h4>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

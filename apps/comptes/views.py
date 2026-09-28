@@ -133,3 +133,4 @@ def profil(request):
         'commandes': MOCK_COMMANDES, # Pour l'affichage de l'historique sur le profil
     }
     return render(request, 'comptes/profil.html', context)
+

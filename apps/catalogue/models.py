@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.contrib.auth.models import User
 
 class Categorie(models.Model):
     nom = models.CharField(max_length=100)
@@ -37,7 +38,16 @@ class Produit(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.nom)
+            base_slug = slugify(self.nom)
+            slug = base_slug
+            i = 1
+
+            while self.__class__.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{i}"
+                i += 1
+
+            self.slug = slug
+
         super().save(*args, **kwargs)
 
     @property
@@ -67,3 +77,54 @@ class ImageProduit(models.Model):
 
     def __str__(self):
         return f"Image pour {self.produit.nom}"
+
+
+class HeroSlide(models.Model):
+    title = models.CharField(max_length=150)
+    subtitle = models.TextField()
+    image = models.ImageField(upload_to="hero/")
+    button_text = models.CharField(max_length=50)
+    button_link = models.CharField(max_length=200)
+    active = models.BooleanField(default=True)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order"]
+
+    def __str__(self):
+        return self.title
+
+
+class Favori(models.Model):
+    utilisateur = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="favoris"
+    )
+
+    produit = models.ForeignKey(
+        "Produit",
+        on_delete=models.CASCADE,
+        related_name="favoris"
+    )
+
+    date_creation = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("utilisateur", "produit")
+
+    def __str__(self):
+        return f"{self.utilisateur.username} - {self.produit.nom}"
+
+
+class Marque(models.Model):
+    nom = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True)
+    logo = models.ImageField(upload_to='marques/')
+    ordre = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['ordre']
+
+    def __str__(self):
+        return self.nom

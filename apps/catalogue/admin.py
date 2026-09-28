@@ -1,10 +1,15 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Categorie, Produit, ImageProduit
+from .models import Categorie, Produit, ImageProduit, HeroSlide
+from .models import Marque
 
 class ImageProduitInline(admin.TabularInline):
     model = ImageProduit
     extra = 1
+@admin.register(Marque)
+class MarqueAdmin(admin.ModelAdmin):
+    list_display = ['nom', 'ordre']
+    prepopulated_fields = {'slug': ('nom',)}
 
 @admin.register(Categorie)
 class CategorieAdmin(admin.ModelAdmin):
@@ -15,6 +20,7 @@ class CategorieAdmin(admin.ModelAdmin):
     def nombre_produits(self, obj):
         return obj.produits.count()
     nombre_produits.short_description = 'Nombre de produits'
+
 
 @admin.register(Produit)
 class ProduitAdmin(admin.ModelAdmin):
@@ -27,6 +33,17 @@ class ProduitAdmin(admin.ModelAdmin):
 
     def apercu_image(self, obj):
         if obj.image:
-            return format_html('<img src="{}" style="width: 50px; height: 50px; object-fit: contain;" />', obj.image.url)
+            return format_html(
+                '<img src="{}" style="width:50px;height:50px;object-fit:contain;" />',
+                obj.image.url
+            )
         return "Pas d'image"
+
     apercu_image.short_description = 'Aperçu'
+
+
+@admin.register(HeroSlide)
+class HeroSlideAdmin(admin.ModelAdmin):
+    list_display = ("title", "order", "active")
+    list_editable = ("order", "active")
+    search_fields = ("title",)

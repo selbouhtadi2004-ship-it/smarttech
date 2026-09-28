@@ -1,5 +1,10 @@
 from django.shortcuts import render, Http404, get_object_or_404
-from apps.catalogue.models import Produit, Categorie
+from apps.catalogue.models import Produit, Categorie, HeroSlide
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect, render
+from django.http import JsonResponse
+from apps.panier.models import Wishlist
+from .models import Categorie, Produit, HeroSlide, Marque
 
 # Catégories de Démo
 Categorie.objects.filter(est_active=True)
@@ -232,11 +237,23 @@ def accueil(request):
     vedettes = [p for p in processed_prods if p['est_en_vedette']][:8]
     nouveautes = list(reversed(processed_prods))[:8]
 
+    slides = HeroSlide.objects.filter(active=True)
+
+    wishlist_ids = []
+
+    if request.user.is_authenticated:
+        wishlist_ids = list(
+            Wishlist.objects.filter(user=request.user)
+            .values_list("produit_id", flat=True)
+        )
+
     context = {
+        'slides': slides,
         'categories': Categorie.objects.filter(est_active=True),
         'produits_vedette': vedettes,
         'nouveautes': nouveautes,
-        'marques': Produit.objects.values_list('marque', flat=True).distinct(),
+        'marques': Marque.objects.all(),
+        'wishlist_ids': wishlist_ids,
     }
 
     return render(request, 'catalogue/accueil.html', context)
@@ -406,3 +423,61 @@ def contact_view(request):
         'marques': Produit.objects.values_list('marque', flat=True).distinct(),
     }
     return render(request, 'catalogue/contact.html', context)
+
+
+def qui_sommes_nous(request):
+    return render(request, "catalogue/qui_sommes_nous.html")
+
+
+def nos_magasins(request):
+    return render(request, "catalogue/nos_magasins.html")
+
+
+def conditions_generales(request):
+    return render(request, "catalogue/conditions_generales.html")
+
+
+def politique_retour(request):
+    return render(request, "catalogue/politique_retour.html")
+
+
+def garantie(request):
+    return render(request, "catalogue/garantie.html")
+
+
+def mentions_legales(request):
+    return render(request, "catalogue/mentions_legales.html")
+
+
+@login_required
+def ajouter_favori(request, produit_id):
+
+    produit = get_object_or_404(Produit, id=produit_id)
+
+    favori, created = Wishlist.objects.get_or_create(
+        user=request.user,
+        produit=produit
+    )
+
+    if created:
+        return JsonResponse({"status": "added"})
+
+    favori.delete()
+    return JsonResponse({"status": "removed"})
+
+
+@login_required
+def mes_favoris(request):
+
+    favoris = Wishlist.objects.filter(
+        user=request.user
+    ).select_related("produit")
+
+    return render(
+        request,
+        "catalogue/favoris.html",
+        {
+            "favoris": favoris
+        }
+    )
+    

@@ -69,6 +69,12 @@ class Panier:
         """
         return sum(Decimal(item['prix']) * item['quantite'] for item in self.panier.values())
 
+    def get_total_price(self):
+        """
+        Alias pour get_total.
+        """
+        return self.get_total()
+
     def est_vide(self):
         return len(self.panier) == 0
 

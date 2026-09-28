@@ -22,7 +22,9 @@ def checkout(request):
             commande.utilisateur = request.user
             # Frais de livraison (offerts)
             commande.frais_livraison = 0.00
+            
             commande.save()
+            
             
             # Enregistrer les articles commandés et décrémenter le stock
             for item in panier:
